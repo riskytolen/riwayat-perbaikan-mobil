@@ -9,29 +9,30 @@
         body {
             font-family: Arial, sans-serif;
             text-align: center;
-            margin: 50px;
+            margin: 20px; /* Mengurangi margin */
             background-color: #f4f4f4;
         }
         .container {
             max-width: 800px;
             margin: auto;
             background: white;
-            padding: 20px;
+            padding: 10px; /* Mengurangi padding */
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
         h2 {
             color: #333;
+            font-size: 1.5em; /* Mengurangi ukuran font judul */
         }
         table {
             width: 100%;
-            margin-top: 20px;
+            margin-top: 10px; /* Mengurangi margin atas tabel */
             border-collapse: collapse;
             background: white;
         }
         th, td {
             border: 1px solid #ddd;
-            padding: 12px;
+            padding: 8px; /* Mengurangi padding */
             text-align: center;
         }
         th {
@@ -40,13 +41,22 @@
         }
         .status {
             font-weight: bold;
-            padding: 5px 10px;
+            padding: 4px 8px; /* Mengurangi padding */
             border-radius: 5px;
         }
         .selesai { background: #28a745; color: white; }
         .proses { background: #ffc107; color: black; }
         .menunggu { background: #dc3545; color: white; }
         @media (max-width: 600px) {
+            body {
+                margin: 10px; /* Mengurangi margin */
+            }
+            .container {
+                padding: 5px; /* Mengurangi padding */
+            }
+            h2 {
+                font-size: 1.2em; /* Mengurangi ukuran font judul */
+            }
             table, thead, tbody, th, td, tr {
                 display: block;
             }
@@ -54,17 +64,19 @@
                 display: none;
             }
             tr {
-                margin-bottom: 15px;
+                margin-bottom: 10px; /* Mengurangi margin bawah baris */
                 border: 1px solid #ddd;
-                padding: 10px;
+                padding: 5px; /* Mengurangi padding */
             }
             td {
                 display: flex;
                 justify-content: space-between;
-                padding: 10px;
+                padding: 5px; /* Mengurangi padding */
                 text-align: left;
+                font-size: 0.9em; /* Mengurangi ukuran font */
             }
             td::before {
+                content: attr(data-label);
                 font-weight: bold;
                 text-transform: capitalize;
             }
@@ -117,10 +129,10 @@
                     let statusClass = item.status.toLowerCase() === "selesai" ? "selesai" :
                                      item.status.toLowerCase() === "proses" ? "proses" : "menunggu";
                     let row = `<tr>
-                        <td>${item.plat}</td>
-                        <td>${tanggal}</td>
-                        <td>${item.jenis}</td>
-                        <td class="status ${statusClass}">${item.status}</td>
+                        <td data-label="Plat Nomor">${item.plat}</td>
+                        <td data-label="Tanggal">${tanggal}</td>
+                        <td data-label="Jenis Perbaikan">${item.jenis}</td>
+                        <td class="status ${statusClass}" data-label="Status">${item.status}</td>
                     </tr>`;
                     tbody.innerHTML += row;
                 });

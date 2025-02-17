@@ -103,8 +103,18 @@
             let url = `https://script.google.com/macros/s/AKfycbyIRDuuR1PzxyXu-kb1H1v_RQa3NEzAJ9zZNTQ82jefsY5KcX7GYzId133K3sJP5Qc1/exec?barcode=${barcode}`;
             let response = await fetch(url);
             let data = await response.json();
-            
-             data.sort((a, b) => new Date(b.tanggal) - new Date(a.tanggal));
+             // Tanggal 30 hari terakhir
+    let tgl30HariLalu = new Date();
+    tgl30HariLalu.setDate(tgl30HariLalu.getDate() - 30);
+
+    // Filter data berdasarkan barcode dan tanggal
+    data = data.filter(item => {
+        let tanggalItem = new Date(item.tanggal);
+        return item.barcode === barcode && tanggalItem >= tgl30HariLalu;
+    });
+
+    // Mengurutkan data berdasarkan tanggal (dari terbaru ke terlama)
+    data.sort((a, b) => new Date(b.tanggal) - new Date(a.tanggal));
 
             let tabel = document.getElementById("hasil");
             let tbody = document.getElementById("dataRiwayat");

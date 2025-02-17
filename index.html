@@ -47,6 +47,12 @@
         .selesai { background: #28a745; color: white; }
         .proses { background: #ffc107; color: black; }
         .menunggu { background: #dc3545; color: white; }
+        .jenis-perbaikan {
+            max-width: 150px; /* Menetapkan lebar maksimum untuk kolom jenis perbaikan */
+            word-wrap: break-word; /* Memaksa teks panjang untuk terputus */
+            overflow: hidden; /* Menyembunyikan teks yang terlalu panjang */
+            text-overflow: ellipsis; /* Menambahkan elipsis jika teks terpotong */
+        }
         @media (max-width: 600px) {
             body {
                 margin: 10px; /* Mengurangi margin */
@@ -116,8 +122,8 @@
             let response = await fetch(url);
             let data = await response.json();
            
-    // Mengurutkan data berdasarkan tanggal (dari terbaru ke terlama)
-    data.sort((a, b) => new Date(b.tanggal) - new Date(a.tanggal));
+            // Mengurutkan data berdasarkan tanggal (dari terbaru ke terlama)
+            data.sort((a, b) => new Date(b.tanggal) - new Date(a.tanggal));
 
             let tabel = document.getElementById("hasil");
             let tbody = document.getElementById("dataRiwayat");
@@ -131,7 +137,7 @@
                     let row = `<tr>
                         <td data-label="Plat Nomor">${item.plat}</td>
                         <td data-label="Tanggal">${tanggal}</td>
-                        <td data-label="Jenis Perbaikan">${item.jenis}</td>
+                        <td class="jenis-perbaikan" data-label="Jenis Perbaikan">${item.jenis}</td>
                         <td class="status ${statusClass}" data-label="Status">${item.status}</td>
                     </tr>`;
                     tbody.innerHTML += row;

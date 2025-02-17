@@ -73,7 +73,7 @@
 </head>
 <body>
     <div class="container">
-        <h2><i class="fas fa-car"></i> Riwayat Perbaikan Mobil Jamslogistik</h2>
+        <h2><i class="fas fa-car"></i> Riwayat Perbaikan Mobil</h2>
         <table id="hasil" style="display:none;">
             <thead>
                 <tr>
@@ -98,24 +98,12 @@
             return new Date(dateString).toLocaleDateString('id-ID', options);
         }
 
-        function filter30HariTerakhir(data) {
-            let batasTanggal = new Date();
-            batasTanggal.setDate(batasTanggal.getDate() - 30);
-            batasTanggal.setHours(0, 0, 0, 0);
-            return data.filter(item => {
-                let itemTanggal = new Date(item.tanggal);
-                itemTanggal.setHours(0, 0, 0, 0);
-                return itemTanggal >= batasTanggal;
-            });
-        }
-
         async function cariRiwayat(barcode) {
             if (!barcode) return;
             let url = `https://script.google.com/macros/s/AKfycbwApCV_5kZd6pLGMW6FlrPFSh04Zp0R9jfS5lzHoGvbXtdjsoR_Oa0xVIxmycKwLZt-/exec?barcode=${barcode}`;
             let response = await fetch(url);
             let data = await response.json();
 
-            data = filter30HariTerakhir(data);
             data.sort((a, b) => new Date(b.tanggal) - new Date(a.tanggal));
 
             let tabel = document.getElementById("hasil");
@@ -137,7 +125,7 @@
                 });
                 tabel.style.display = "table";
             } else {
-                alert("Data tidak ditemukan dalam 30 hari terakhir!");
+                alert("Data tidak ditemukan!");
                 tabel.style.display = "none";
             }
         }

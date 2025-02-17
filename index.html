@@ -101,7 +101,12 @@
         function filterSebulanTerakhir(data) {
             let batasTanggal = new Date();
             batasTanggal.setMonth(batasTanggal.getMonth() - 1);
-            return data.filter(item => new Date(item.tanggal) >= batasTanggal);
+            batasTanggal.setHours(0, 0, 0, 0);
+            return data.filter(item => {
+                let itemTanggal = new Date(item.tanggal);
+                itemTanggal.setHours(0, 0, 0, 0);
+                return itemTanggal >= batasTanggal;
+            });
         }
 
         async function cariRiwayat(barcode) {

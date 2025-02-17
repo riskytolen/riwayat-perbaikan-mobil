@@ -100,7 +100,7 @@
 
         async function cariRiwayat(barcode) {
             if (!barcode) return;
-            let url = `https://script.google.com/macros/s/AKfycbz7twNb3Sf8LrSPi-LaFi3ICthDRA_EdpCdQjlN9sOVqZmDeNeRQ2x9ByEqiripGG0Q/exec?barcode=${barcode}`;
+            let url = `https://script.google.com/macros/s/AKfycbyn4hSaw8FqPn4Cgd4FBLa6TxfVQ28E1oaESQeUw2NCvNuVBp2Bvjl0yleZRCGjiEx-/exec?barcode=${barcode}`;
             let response = await fetch(url);
             let data = await response.json();
            

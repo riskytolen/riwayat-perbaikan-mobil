@@ -73,7 +73,7 @@
 </head>
 <body>
     <div class="container">
-        <h2><i class="fas fa-car"></i> Riwayat Perbaikan Mobil</h2>
+        <h2><i class="fas fa-car"></i> Riwayat Perbaikan Mobil Jamslogistik</h2>
         <table id="hasil" style="display:none;">
             <thead>
                 <tr>
@@ -98,9 +98,9 @@
             return new Date(dateString).toLocaleDateString('id-ID', options);
         }
 
-        function filterSebulanTerakhir(data) {
+        function filter30HariTerakhir(data) {
             let batasTanggal = new Date();
-            batasTanggal.setMonth(batasTanggal.getMonth() - 1);
+            batasTanggal.setDate(batasTanggal.getDate() - 30);
             batasTanggal.setHours(0, 0, 0, 0);
             return data.filter(item => {
                 let itemTanggal = new Date(item.tanggal);
@@ -115,7 +115,7 @@
             let response = await fetch(url);
             let data = await response.json();
 
-            data = filterSebulanTerakhir(data);
+            data = filter30HariTerakhir(data);
             data.sort((a, b) => new Date(b.tanggal) - new Date(a.tanggal));
 
             let tabel = document.getElementById("hasil");
@@ -137,7 +137,7 @@
                 });
                 tabel.style.display = "table";
             } else {
-                alert("Data tidak ditemukan dalam sebulan terakhir!");
+                alert("Data tidak ditemukan dalam 30 hari terakhir!");
                 tabel.style.display = "none";
             }
         }

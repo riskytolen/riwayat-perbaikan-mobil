@@ -132,40 +132,25 @@
                 color: var(--card-text);
             }
 
-            td::before {
-                content: attr(data-label);
+            /* Container untuk ikon dan label */
+            .label-container {
+                display: flex;
+                align-items: center;
+                flex: 0 0 40%;
+            }
+
+            /* Ikon */
+            .label-container i {
+                margin-right: 10px;
+                font-size: 1.2em;
+                color: var(--primary-color);
+            }
+
+            /* Label */
+            .label-container span {
                 font-weight: bold;
                 text-transform: uppercase;
                 color: var(--primary-color);
-                margin-right: 15px;
-                flex: 0 0 40%;
-                display: flex;
-                align-items: center;
-            }
-
-            /* Tambahkan ikon untuk setiap label */
-            td[data-label="Plat Nomor"]::before {
-                content: "\f1b9"; /* Ikon mobil */
-                font-family: "Font Awesome 5 Free";
-                font-weight: 900;
-            }
-
-            td[data-label="Tanggal"]::before {
-                content: "\f073"; /* Ikon kalender */
-                font-family: "Font Awesome 5 Free";
-                font-weight: 900;
-            }
-
-            td[data-label="Jenis Perbaikan"]::before {
-                content: "\f085"; /* Ikon gear */
-                font-family: "Font Awesome 5 Free";
-                font-weight: 900;
-            }
-
-            td[data-label="Status"]::before {
-                content: "\f05a"; /* Ikon info */
-                font-family: "Font Awesome 5 Free";
-                font-weight: 900;
             }
 
             .status {
@@ -199,11 +184,9 @@
                 flex-wrap: wrap;
             }
             
-            td::before {
+            .label-container {
                 flex: 0 0 100%;
                 margin-bottom: 8px;
-                font-size: 12px;
-                color: var(--primary-color);
             }
             
             .status {
@@ -281,10 +264,34 @@
                         let statusClass = item.status.toLowerCase() === "selesai" ? "selesai" :
                                        item.status.toLowerCase() === "proses" ? "proses" : "menunggu";
                         let row = `<tr>
-                            <td data-label="Plat Nomor">${item.plat}</td>
-                            <td data-label="Tanggal">${tanggal}</td>
-                            <td data-label="Jenis Perbaikan">${item.jenis}</td>
-                            <td data-label="Status"><span class="status ${statusClass}">${item.status}</span></td>
+                            <td>
+                                <div class="label-container">
+                                    <i class="fas fa-car"></i>
+                                    <span>Plat Nomor</span>
+                                </div>
+                                ${item.plat}
+                            </td>
+                            <td>
+                                <div class="label-container">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    <span>Tanggal</span>
+                                </div>
+                                ${tanggal}
+                            </td>
+                            <td>
+                                <div class="label-container">
+                                    <i class="fas fa-cogs"></i>
+                                    <span>Jenis Perbaikan</span>
+                                </div>
+                                ${item.jenis}
+                            </td>
+                            <td>
+                                <div class="label-container">
+                                    <i class="fas fa-info-circle"></i>
+                                    <span>Status</span>
+                                </div>
+                                <span class="status ${statusClass}">${item.status}</span>
+                            </td>
                         </tr>`;
                         tbody.innerHTML += row;
                     });

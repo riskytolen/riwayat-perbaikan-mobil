@@ -100,19 +100,10 @@
 
         async function cariRiwayat(barcode) {
             if (!barcode) return;
-            let url = `https://script.google.com/macros/s/AKfycbyIRDuuR1PzxyXu-kb1H1v_RQa3NEzAJ9zZNTQ82jefsY5KcX7GYzId133K3sJP5Qc1/exec?barcode=${barcode}`;
+            let url = `https://script.google.com/macros/s/AKfycbz7twNb3Sf8LrSPi-LaFi3ICthDRA_EdpCdQjlN9sOVqZmDeNeRQ2x9ByEqiripGG0Q/exec?barcode=${barcode}`;
             let response = await fetch(url);
             let data = await response.json();
-             // Tanggal 30 hari terakhir
-    let tgl30HariLalu = new Date();
-    tgl30HariLalu.setDate(tgl30HariLalu.getDate() - 30);
-
-    // Filter data berdasarkan barcode dan tanggal
-    data = data.filter(item => {
-        let tanggalItem = new Date(item.tanggal);
-        return item.barcode === barcode && tanggalItem >= tgl30HariLalu;
-    });
-
+           
     // Mengurutkan data berdasarkan tanggal (dari terbaru ke terlama)
     data.sort((a, b) => new Date(b.tanggal) - new Date(a.tanggal));
 

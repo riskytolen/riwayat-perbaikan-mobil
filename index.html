@@ -9,30 +9,30 @@
         body {
             font-family: Arial, sans-serif;
             text-align: center;
-            margin: 20px; /* Mengurangi margin */
+            margin: 20px;
             background-color: #f4f4f4;
         }
         .container {
             max-width: 800px;
             margin: auto;
             background: white;
-            padding: 10px; /* Mengurangi padding */
+            padding: 10px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
         h2 {
             color: #333;
-            font-size: 1.5em; /* Mengurangi ukuran font judul */
+            font-size: 1.5em;
         }
         table {
             width: 100%;
-            margin-top: 10px; /* Mengurangi margin atas tabel */
+            margin-top: 10px;
             border-collapse: collapse;
             background: white;
         }
         th, td {
             border: 1px solid #ddd;
-            padding: 8px; /* Mengurangi padding */
+            padding: 8px;
             text-align: center;
         }
         th {
@@ -41,27 +41,21 @@
         }
         .status {
             font-weight: bold;
-            padding: 4px 8px; /* Mengurangi padding */
+            padding: 4px 8px;
             border-radius: 5px;
         }
         .selesai { background: #28a745; color: white; }
         .proses { background: #ffc107; color: black; }
         .menunggu { background: #dc3545; color: white; }
-        .jenis-perbaikan {
-            max-width: 150px; /* Menetapkan lebar maksimum untuk kolom jenis perbaikan */
-            word-wrap: break-word; /* Memaksa teks panjang untuk terputus */
-            overflow: hidden; /* Menyembunyikan teks yang terlalu panjang */
-            text-overflow: ellipsis; /* Menambahkan elipsis jika teks terpotong */
-        }
         @media (max-width: 600px) {
             body {
-                margin: 10px; /* Mengurangi margin */
+                margin: 10px;
             }
             .container {
-                padding: 5px; /* Mengurangi padding */
+                padding: 5px;
             }
             h2 {
-                font-size: 1.2em; /* Mengurangi ukuran font judul */
+                font-size: 1.2em;
             }
             table, thead, tbody, th, td, tr {
                 display: block;
@@ -70,21 +64,34 @@
                 display: none;
             }
             tr {
-                margin-bottom: 10px; /* Mengurangi margin bawah baris */
+                margin-bottom: 10px;
                 border: 1px solid #ddd;
-                padding: 5px; /* Mengurangi padding */
+                padding: 5px;
             }
             td {
                 display: flex;
                 justify-content: space-between;
-                padding: 5px; /* Mengurangi padding */
+                padding: 5px;
                 text-align: left;
-                font-size: 0.9em; /* Mengurangi ukuran font */
+                font-size: 0.9em;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
             td::before {
                 content: attr(data-label);
                 font-weight: bold;
                 text-transform: capitalize;
+                flex: 1;
+            }
+            td:last-child {
+                flex: 2;
+            }
+            td[data-label="Jenis Perbaikan"] {
+                flex: 3;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
         }
     </style>
@@ -122,8 +129,8 @@
             let response = await fetch(url);
             let data = await response.json();
            
-            // Mengurutkan data berdasarkan tanggal (dari terbaru ke terlama)
-            data.sort((a, b) => new Date(b.tanggal) - new Date(a.tanggal));
+    // Mengurutkan data berdasarkan tanggal (dari terbaru ke terlama)
+    data.sort((a, b) => new Date(b.tanggal) - new Date(a.tanggal));
 
             let tabel = document.getElementById("hasil");
             let tbody = document.getElementById("dataRiwayat");
@@ -137,7 +144,7 @@
                     let row = `<tr>
                         <td data-label="Plat Nomor">${item.plat}</td>
                         <td data-label="Tanggal">${tanggal}</td>
-                        <td class="jenis-perbaikan" data-label="Jenis Perbaikan">${item.jenis}</td>
+                        <td data-label="Jenis Perbaikan">${item.jenis}</td>
                         <td class="status ${statusClass}" data-label="Status">${item.status}</td>
                     </tr>`;
                     tbody.innerHTML += row;

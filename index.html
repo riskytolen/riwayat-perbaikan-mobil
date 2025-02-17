@@ -98,12 +98,23 @@
             return new Date(dateString).toLocaleDateString('id-ID', options);
         }
 
+        function filter30HariTerakhir(data, platNomor) {
+            let batasTanggal = new Date();
+            batasTanggal.setDate(batasTanggal.getDate() - 30);
+            batasTanggal.setHours(0, 0, 0, 0);
+            return data.filter(item => {
+                return item.plat === platNomor && new Date(item.tanggal) >= batasTanggal;
+            });
+        }
+
         async function cariRiwayat(barcode) {
             if (!barcode) return;
-            let url = `https://script.google.com/macros/s/AKfycbwApCV_5kZd6pLGMW6FlrPFSh04Zp0R9jfS5lzHoGvbXtdjsoR_Oa0xVIxmycKwLZt-/exec?barcode=${barcode}`;
+            let url = `https://script.google.com/macros/s/AKfycbyCAHDjb5lvKG9WFJTOlTB7dU_knvEFlnzoGxTDWaLHbP06uSJB7_L-V2xR2h7Hyg_H/exec?barcode=${barcode}`;
             let response = await fetch(url);
             let data = await response.json();
 
+            let platNomor = getQueryParam("barcode");
+            data = filter30HariTerakhir(data, platNomor);
             data.sort((a, b) => new Date(b.tanggal) - new Date(a.tanggal));
 
             let tabel = document.getElementById("hasil");
@@ -125,7 +136,7 @@
                 });
                 tabel.style.display = "table";
             } else {
-                alert("Data tidak ditemukan!");
+                alert("Data tidak ditemukan dalam 30 hari terakhir untuk plat nomor ini!");
                 tabel.style.display = "none";
             }
         }

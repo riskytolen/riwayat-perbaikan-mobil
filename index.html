@@ -77,7 +77,6 @@
         <table id="hasil" style="display:none;">
             <thead>
                 <tr>
-                    <th><i class="fas fa-barcode"></i> Kode</th>
                     <th><i class="fas fa-car"></i> Plat Nomor</th>
                     <th><i class="far fa-calendar-alt"></i> Tanggal</th>
                     <th><i class="fas fa-tools"></i> Jenis Perbaikan</th>
@@ -94,11 +93,25 @@
             return params.get(param);
         }
 
+        function formatTanggal(dateString) {
+            const options = { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' };
+            return new Date(dateString).toLocaleDateString('id-ID', options);
+        }
+
+        function filterSebulanTerakhir(data) {
+            let batasTanggal = new Date();
+            batasTanggal.setMonth(batasTanggal.getMonth() - 1);
+            return data.filter(item => new Date(item.tanggal) >= batasTanggal);
+        }
+
         async function cariRiwayat(barcode) {
             if (!barcode) return;
             let url = `https://script.google.com/macros/s/AKfycbzUAbOnifn8CwPMVrR88uwG8m6fkASEeDgc9GGU-ozeYhkuIh8zQMcdhfPqTwpHL-ZM/exec?barcode=${barcode}`;
             let response = await fetch(url);
             let data = await response.json();
+
+            data = filterSebulanTerakhir(data);
+            data.sort((a, b) => new Date(b.tanggal) - new Date(a.tanggal));
 
             let tabel = document.getElementById("hasil");
             let tbody = document.getElementById("dataRiwayat");
@@ -106,13 +119,10 @@
 
             if (data.length > 0) {
                 data.forEach(item => {
-                    let tanggal = new Date(item.tanggal).toLocaleDateString("id-ID", {
-                        day: "2-digit", month: "2-digit", year: "numeric"
-                    });
+                    let tanggal = formatTanggal(item.tanggal);
                     let statusClass = item.status.toLowerCase() === "selesai" ? "selesai" :
                                      item.status.toLowerCase() === "proses" ? "proses" : "menunggu";
                     let row = `<tr>
-                        <td>${item.kode}</td>
                         <td>${item.plat}</td>
                         <td>${tanggal}</td>
                         <td>${item.jenis}</td>
@@ -122,12 +132,11 @@
                 });
                 tabel.style.display = "table";
             } else {
-                alert("Data tidak ditemukan!");
+                alert("Data tidak ditemukan dalam sebulan terakhir!");
                 tabel.style.display = "none";
             }
         }
 
-        // Ambil barcode dari URL dan cari otomatis
         let barcode = getQueryParam("barcode");
         if (barcode) {
             cariRiwayat(barcode);

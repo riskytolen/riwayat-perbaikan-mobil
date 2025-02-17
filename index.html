@@ -33,7 +33,7 @@
         th, td {
             border: 1px solid #ddd;
             padding: 8px;
-            text-align: center;
+            text-align: left;
         }
         th {
             background-color: #007BFF;
@@ -67,6 +67,8 @@
                 margin-bottom: 10px;
                 border: 1px solid #ddd;
                 padding: 5px;
+                background: white;
+                border-radius: 5px;
             }
             td {
                 display: flex;
@@ -82,16 +84,11 @@
                 content: attr(data-label);
                 font-weight: bold;
                 text-transform: capitalize;
-                flex: 1;
-            }
-            td:last-child {
-                flex: 2;
-            }
-            td[data-label="Jenis Perbaikan"] {
-                flex: 3;
+                width: 40%;
                 white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
+            }
+            td {
+                width: 100%;
             }
         }
     </style>

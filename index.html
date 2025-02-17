@@ -4,26 +4,89 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Riwayat Perbaikan Mobil</title>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; margin: 50px; }
-        table { width: 100%; margin-top: 20px; border-collapse: collapse; }
-        th, td { border: 1px solid #ddd; padding: 8px; text-align: center; }
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: #333;
+        }
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+            background: white;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: center;
+        }
+        th {
+            background-color: #007BFF;
+            color: white;
+        }
+        .status {
+            font-weight: bold;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+        .selesai { background: #28a745; color: white; }
+        .proses { background: #ffc107; color: black; }
+        .menunggu { background: #dc3545; color: white; }
+        @media (max-width: 600px) {
+            table, thead, tbody, th, td, tr {
+                display: block;
+            }
+            th {
+                display: none;
+            }
+            tr {
+                margin-bottom: 15px;
+                border: 1px solid #ddd;
+                padding: 10px;
+            }
+            td {
+                display: flex;
+                justify-content: space-between;
+                padding: 10px;
+                text-align: left;
+            }
+            td::before {
+                font-weight: bold;
+                text-transform: capitalize;
+            }
+        }
     </style>
 </head>
 <body>
-    <h2>Riwayat Perbaikan Mobil</h2>
-    <table id="hasil" style="display:none;">
-        <thead>
-            <tr>
-                <th>Kode Barcode</th>
-                <th>Plat Nomor</th>
-                <th>Tanggal</th>
-                <th>Jenis Perbaikan</th>
-                <th>Status</th>
-            </tr>
-        </thead>
-        <tbody id="dataRiwayat"></tbody>
-    </table>
+    <div class="container">
+        <h2><i class="fas fa-car"></i> Riwayat Perbaikan Mobil</h2>
+        <table id="hasil" style="display:none;">
+            <thead>
+                <tr>
+                    <th><i class="fas fa-barcode"></i> Kode</th>
+                    <th><i class="fas fa-car"></i> Plat Nomor</th>
+                    <th><i class="far fa-calendar-alt"></i> Tanggal</th>
+                    <th><i class="fas fa-tools"></i> Jenis Perbaikan</th>
+                    <th><i class="fas fa-info-circle"></i> Status</th>
+                </tr>
+            </thead>
+            <tbody id="dataRiwayat"></tbody>
+        </table>
+    </div>
 
     <script>
         function getQueryParam(param) {
@@ -43,12 +106,17 @@
 
             if (data.length > 0) {
                 data.forEach(item => {
+                    let tanggal = new Date(item.tanggal).toLocaleDateString("id-ID", {
+                        day: "2-digit", month: "2-digit", year: "numeric"
+                    });
+                    let statusClass = item.status.toLowerCase() === "selesai" ? "selesai" :
+                                     item.status.toLowerCase() === "proses" ? "proses" : "menunggu";
                     let row = `<tr>
                         <td>${item.kode}</td>
                         <td>${item.plat}</td>
-                        <td>${item.tanggal}</td>
+                        <td>${tanggal}</td>
                         <td>${item.jenis}</td>
-                        <td>${item.status}</td>
+                        <td class="status ${statusClass}">${item.status}</td>
                     </tr>`;
                     tbody.innerHTML += row;
                 });

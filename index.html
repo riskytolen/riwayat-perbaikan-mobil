@@ -12,6 +12,8 @@
             --success-color: #27ae60;
             --warning-color: #f1c40f;
             --danger-color: #e74c3c;
+            --row-color-1: #ffffff; /* Warna baris pertama */
+            --row-color-2: #f8f9fa; /* Warna baris kedua */
         }
 
         body {
@@ -65,8 +67,13 @@
             letter-spacing: 0.5px;
         }
 
+        /* Warna baris bergantian */
+        tr:nth-child(odd) {
+            background-color: var(--row-color-1);
+        }
+
         tr:nth-child(even) {
-            background-color: #f8f9fa;
+            background-color: var(--row-color-2);
         }
 
         .status {
@@ -136,6 +143,16 @@
                 text-align: right;
                 min-width: 100px;
                 margin: 0;
+            }
+
+            /* Pada mode mobile, semua baris berwarna putih */
+            tr {
+                background-color: var(--row-color-1) !important;
+                margin-bottom: 15px;
+                display: block;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+                border-radius: 8px;
+                overflow: hidden;
             }
         }
 

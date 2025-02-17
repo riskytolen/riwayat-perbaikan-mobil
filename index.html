@@ -103,6 +103,8 @@
             let url = `https://script.google.com/macros/s/AKfycbyIRDuuR1PzxyXu-kb1H1v_RQa3NEzAJ9zZNTQ82jefsY5KcX7GYzId133K3sJP5Qc1/exec?barcode=${barcode}`;
             let response = await fetch(url);
             let data = await response.json();
+            
+             data.sort((a, b) => new Date(b.tanggal) - new Date(a.tanggal));
 
             let tabel = document.getElementById("hasil");
             let tbody = document.getElementById("dataRiwayat");

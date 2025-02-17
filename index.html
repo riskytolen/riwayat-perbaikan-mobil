@@ -124,7 +124,6 @@
 
             td {
                 display: flex;
-                justify-content: space-between;
                 align-items: center;
                 text-align: left;
                 padding: 15px;
@@ -140,6 +139,33 @@
                 color: var(--primary-color);
                 margin-right: 15px;
                 flex: 0 0 40%;
+                display: flex;
+                align-items: center;
+            }
+
+            /* Tambahkan ikon untuk setiap label */
+            td[data-label="Plat Nomor"]::before {
+                content: "\f1b9"; /* Ikon mobil */
+                font-family: "Font Awesome 5 Free";
+                font-weight: 900;
+            }
+
+            td[data-label="Tanggal"]::before {
+                content: "\f073"; /* Ikon kalender */
+                font-family: "Font Awesome 5 Free";
+                font-weight: 900;
+            }
+
+            td[data-label="Jenis Perbaikan"]::before {
+                content: "\f085"; /* Ikon gear */
+                font-family: "Font Awesome 5 Free";
+                font-weight: 900;
+            }
+
+            td[data-label="Status"]::before {
+                content: "\f05a"; /* Ikon info */
+                font-family: "Font Awesome 5 Free";
+                font-weight: 900;
             }
 
             .status {

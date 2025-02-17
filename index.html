@@ -12,8 +12,11 @@
             --success-color: #27ae60;
             --warning-color: #f1c40f;
             --danger-color: #e74c3c;
-            --row-color-1: #ffffff; /* Warna baris pertama */
-            --row-color-2: #f8f9fa; /* Warna baris kedua */
+            --row-color-1: #ffffff;
+            --row-color-2: #f8f9fa;
+            --card-bg: #ffffff;
+            --card-text: #333333;
+            --card-shadow: rgba(0, 0, 0, 0.1);
         }
 
         body {
@@ -67,7 +70,6 @@
             letter-spacing: 0.5px;
         }
 
-        /* Warna baris bergantian */
         tr:nth-child(odd) {
             background-color: var(--row-color-1);
         }
@@ -127,6 +129,8 @@
                 text-align: left;
                 padding: 15px;
                 border-bottom: 1px solid #eee;
+                background-color: var(--card-bg);
+                color: var(--card-text);
             }
 
             td::before {
@@ -145,14 +149,20 @@
                 margin: 0;
             }
 
-            /* Pada mode mobile, semua baris berwarna putih */
+            /* Card styling for mobile */
             tr {
-                background-color: var(--row-color-1) !important;
+                background-color: var(--card-bg) !important;
                 margin-bottom: 15px;
                 display: block;
-                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-                border-radius: 8px;
+                box-shadow: 0 4px 10px var(--card-shadow);
+                border-radius: 12px;
                 overflow: hidden;
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+            }
+
+            tr:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
             }
         }
 
@@ -166,6 +176,8 @@
             td::before {
                 flex: 0 0 100%;
                 margin-bottom: 8px;
+                font-size: 12px;
+                color: var(--primary-color);
             }
             
             .status {
@@ -173,11 +185,17 @@
                 text-align: left;
                 min-width: auto;
                 padding: 6px 12px;
+                margin-top: 5px;
             }
             
             .header h2 {
                 font-size: 1.4em;
                 padding: 0 10px;
+            }
+
+            /* Improve card spacing on small devices */
+            tr {
+                margin-bottom: 10px;
             }
         }
     </style>

@@ -114,6 +114,20 @@
             100% { transform: rotate(360deg); }
         }
 
+        /* Tampilan Desktop (Web) */
+        @media (min-width: 769px) {
+            /* Sembunyikan label dan ikon pada tampilan desktop */
+            .label-container {
+                display: none;
+            }
+
+            /* Pastikan teks di sel tabel rata tengah */
+            td {
+                text-align: center;
+            }
+        }
+
+        /* Tampilan Mobile */
         @media (max-width: 768px) {
             .container {
                 margin: 10px;

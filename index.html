@@ -114,31 +114,28 @@
             th { display: none; }
 
             td {
-                display: block;
-                text-align: right;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                text-align: left;
                 padding: 15px;
                 border-bottom: 1px solid #eee;
             }
 
             td::before {
                 content: attr(data-label);
-                float: left;
                 font-weight: bold;
                 text-transform: uppercase;
                 color: var(--primary-color);
-            }
-
-            tr {
-                margin-bottom: 15px;
-                display: block;
-                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-                border-radius: 8px;
-                overflow: hidden;
+                margin-right: 15px;
+                flex: 0 0 40%;
             }
 
             .status {
-                float: right;
-                margin-top: -5px;
+                flex: 0 1 55%;
+                text-align: right;
+                min-width: 100px;
+                margin: 0;
             }
         }
 
@@ -146,15 +143,24 @@
             td {
                 font-size: 14px;
                 padding: 12px;
+                flex-wrap: wrap;
+            }
+            
+            td::before {
+                flex: 0 0 100%;
+                margin-bottom: 8px;
             }
             
             .status {
-                font-size: 12px;
+                flex: 0 0 100%;
+                text-align: left;
+                min-width: auto;
                 padding: 6px 12px;
             }
             
             .header h2 {
                 font-size: 1.4em;
+                padding: 0 10px;
             }
         }
     </style>
@@ -202,7 +208,6 @@
                 let response = await fetch(url);
                 let data = await response.json();
 
-                // Urutkan data berdasarkan tanggal terbaru
                 data.sort((a, b) => new Date(b.tanggal) - new Date(a.tanggal));
 
                 let tabel = document.getElementById("hasil");
@@ -213,7 +218,7 @@
                     data.forEach(item => {
                         let tanggal = formatTanggal(item.tanggal);
                         let statusClass = item.status.toLowerCase() === "selesai" ? "selesai" :
-                                         item.status.toLowerCase() === "proses" ? "proses" : "menunggu";
+                                       item.status.toLowerCase() === "proses" ? "proses" : "menunggu";
                         let row = `<tr>
                             <td data-label="Plat Nomor">${item.plat}</td>
                             <td data-label="Tanggal">${tanggal}</td>
@@ -235,7 +240,6 @@
             }
         }
 
-        // Ambil barcode dari URL dan cari otomatis
         let barcode = getQueryParam("barcode");
         if (barcode) {
             cariRiwayat(barcode);

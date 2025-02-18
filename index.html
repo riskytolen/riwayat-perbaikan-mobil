@@ -152,13 +152,14 @@
                 display: flex;
                 align-items: center;
                 flex: 0 0 40%;
+                gap: 10px; /* Tambahkan jarak antara ikon dan label */
             }
 
             /* Ikon */
             .label-container i {
-                margin-right: 10px;
                 font-size: 1.2em;
                 color: var(--primary-color);
+                min-width: 20px; /* Pastikan lebar ikon konsisten */
             }
 
             /* Label */
@@ -166,6 +167,7 @@
                 font-weight: bold;
                 text-transform: uppercase;
                 color: var(--primary-color);
+                white-space: nowrap; /* Hindari label terpotong */
             }
 
             .status {
@@ -202,6 +204,7 @@
             .label-container {
                 flex: 0 0 100%;
                 margin-bottom: 8px;
+                gap: 8px; /* Kurangi jarak pada layar kecil */
             }
             
             .status {

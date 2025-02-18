@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Riwayat Perbaikan Mobil Jamslogistik</title>
-    <!-- Pastikan Font Awesome dimuat dengan benar -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         :root {
@@ -116,12 +115,10 @@
 
         /* Tampilan Desktop (Web) */
         @media (min-width: 769px) {
-            /* Sembunyikan label dan ikon pada tampilan desktop */
             .label-container {
                 display: none;
             }
 
-            /* Pastikan teks di sel tabel rata tengah */
             td {
                 text-align: center;
             }
@@ -147,27 +144,24 @@
                 color: var(--card-text);
             }
 
-            /* Container untuk ikon dan label */
             .label-container {
                 display: flex;
                 align-items: center;
                 flex: 0 0 40%;
-                gap: 10px; /* Tambahkan jarak antara ikon dan label */
+                gap: 10px;
             }
 
-            /* Ikon */
             .label-container i {
                 font-size: 1.2em;
                 color: var(--primary-color);
-                min-width: 20px; /* Pastikan lebar ikon konsisten */
+                min-width: 20px;
             }
 
-            /* Label */
             .label-container span {
                 font-weight: bold;
                 text-transform: uppercase;
                 color: var(--primary-color);
-                white-space: nowrap; /* Hindari label terpotong */
+                white-space: nowrap;
             }
 
             .status {
@@ -177,7 +171,6 @@
                 margin: 0;
             }
 
-            /* Card styling for mobile */
             tr {
                 background-color: var(--card-bg) !important;
                 margin-bottom: 15px;
@@ -204,7 +197,7 @@
             .label-container {
                 flex: 0 0 100%;
                 margin-bottom: 8px;
-                gap: 8px; /* Kurangi jarak pada layar kecil */
+                gap: 8px;
             }
             
             .status {
@@ -220,7 +213,6 @@
                 padding: 0 10px;
             }
 
-            /* Improve card spacing on small devices */
             tr {
                 margin-bottom: 10px;
             }
@@ -242,7 +234,8 @@
             <thead>
                 <tr>
                     <th>Plat Nomor</th>
-                    <th>Tanggal</th>
+                    <th>Tanggal Perbaikan</th>
+                    <th>Tanggal Selesai</th>
                     <th>Jenis Perbaikan</th>
                     <th>Status</th>
                 </tr>
@@ -266,11 +259,11 @@
             document.querySelector('.loading').style.display = 'block';
             try {
                 if (!barcode) return;
-                let url = `https://script.google.com/macros/s/AKfycbyn4hSaw8FqPn4Cgd4FBLa6TxfVQ28E1oaESQeUw2NCvNuVBp2Bvjl0yleZRCGjiEx-/exec?barcode=${barcode}`;
+                let url = `https://script.google.com/macros/s/AKfycbxiJaYhHhj0ykW4e6EKp5iqNYEzQqXVtADTEeHFBda7pYkDzu7fCDMFB0ogyPx93yrx/exec?barcode=${barcode}`;
                 let response = await fetch(url);
                 let data = await response.json();
 
-                data.sort((a, b) => new Date(b.tanggal) - new Date(a.tanggal));
+                data.sort((a, b) => new Date(b.tanggal_perbaikan) - new Date(a.tanggal_perbaikan));
 
                 let tabel = document.getElementById("hasil");
                 let tbody = document.getElementById("dataRiwayat");
@@ -278,9 +271,9 @@
 
                 if (data.length > 0) {
                     data.forEach(item => {
-                        let tanggal = formatTanggal(item.tanggal);
-                        let statusClass = item.status.toLowerCase() === "selesai" ? "selesai" :
-                                       item.status.toLowerCase() === "proses" ? "proses" : "menunggu";
+                        let tanggalPerbaikan = formatTanggal(item.tanggal_perbaikan);
+                        let tanggalSelesai = item.tanggal_selesai ? formatTanggal(item.tanggal_selesai) : "-";
+                        let statusClass = item.status.toLowerCase() === "selesai" ? "selesai" : "proses";
                         let row = `<tr>
                             <td>
                                 <div class="label-container">
@@ -292,9 +285,16 @@
                             <td>
                                 <div class="label-container">
                                     <i class="fas fa-calendar-alt"></i>
-                                    <span>Tanggal</span>
+                                    <span>Tanggal Perbaikan</span>
                                 </div>
-                                ${tanggal}
+                                ${tanggalPerbaikan}
+                            </td>
+                            <td>
+                                <div class="label-container">
+                                    <i class="fas fa-calendar-check"></i>
+                                    <span>Tanggal Selesai</span>
+                                </div>
+                                ${tanggalSelesai}
                             </td>
                             <td>
                                 <div class="label-container">
